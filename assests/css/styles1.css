@@ -537,10 +537,14 @@ th:last-child{
 }
 
 .orders th{
-    text-align: left;
-    padding: 5px 10px;
+    padding: 5px 20px;
     color: #fff;
     background-color: #fb774b;
+    text-align: left;
+}
+
+.orders th:nth-child(2){
+    text-align: right;
 }
 
 .orders td{
@@ -551,4 +555,28 @@ th:last-child{
     width: 80px;
     height: 80px;
     margin-right:10px ;
+}
+
+/*CHECHOUT*/
+#checkout-form .checkout-small-element{
+    display: inline-block;
+    width: 48%;
+    margin: 10px auto;
+}
+
+
+#checkout-form .checkout-large-element{
+    width: 96%;
+
+}
+
+#checkout-form .checkout-btn-container{
+    margin: 10px;
+    text-align: right;
+    margin-right: 40px;
+}
+
+#checkout-form #checkout-btn{
+    color: #fff;
+    background-color: #fb774b;
 }
