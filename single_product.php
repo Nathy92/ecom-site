@@ -1,4 +1,23 @@
-<!DOCTYPE html>
+<?php
+ include('server/connection.php');
+	if(isset($_GET['product_id'])){
+
+		$product_id = $_GET['product_id'];
+		$stmt = $conn->prepare("SELECT * FROM products WHERE product_id = ? ");
+		$stmt->bind_param("i",$product_id);
+
+		$stmt->execute();
+		
+		$product = $stmt->get_result();
+
+	}else{
+		//If you try passing or navigation to product_id without specifying the ID
+		//Take user back to index.php
+		header('location:index.php');
+	}
+?>
+ 
+ <!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -63,44 +82,55 @@
 	<!--SINGLE-->
 	<section class="single-product my-5 pt-5">
 		<div class="row mt-5">
+
+
+		<?php while($row = $product->fetch_assoc()) {?>
+			
 			<div class="col-lg-5 col-md-6 col-sm-12">
-				<img classs="img-fluid w-100 pb-1"src="assests/imgs/featured3.jpg" id="mainImg">
+				<img classs="img-fluid w-100 pb-1"src="assests/imgs/<?= $row['product_image']; ?>" id="mainImg">
 				<div class="small-img-group">
 					<div class="small-img-col">
-						<img src="assests/imgs/clothes4.jpg" width="100%" class="small-img" />
+						<img src="assests/imgs/<?= $row['product_image2']; ?>" width="100%" class="small-img" />
 					</div>
 
 					<div class="small-img-col">
-						<img src="assests/imgs/featured4.jpg" width="100%" class="small-img" />
+						<img src="assests/imgs/<?= $row['product_image3']; ?>" width="100%" class="small-img" />
 					</div>
 
 					<div class="small-img-col">
-						<img src="assests/imgs/clothes2.jpg" width="100%" class="small-img" />
+						<img src="assests/imgs/<?= $row['product_image4']; ?>.jpg" width="100%" class="small-img" />
 					</div>
 
-					<div class="small-img-col">
-						<img src="assests/imgs/clothes4.jpg" width="100%" class="small-img" />
-					</div>
-
-					
+			
 				</div>
 			</div>
 
+		
 			<div class="col-lg-6 col-md-12 col-12">
 				<h6>Men/Shoes</h6>
-				<h3 class="py-4">Men's Fashion</h3>
-				<h2>123$</h2>
-				<input type="number" value="1">
-				<button class="buy-btn">Add To Cart</button>
+				<h3 class="py-4"><?= $row['product_name']; ?></h3>
+				<h2>R<?= $row['product_price']; ?></h2>
+
+				<form method="POST" action="cart.php">
+					<input type="hidden" name="product_id" value="<?= $row['product_id']; ?>"/>
+					<input type="hidden" name="product_image" value="<?= $row['product_image']; ?>"/>
+					<input type="hidden" name="product_name" value="<?= $row['product_name']; ?>" />
+					<input type="hidden" name="product_price" value="<?= $row['product_price']; ?>" />
+					
+					<input type="number" name="product_quantity" value="1">
+					<button class="buy-btn" type="submit" name="add_to_cart">Add To Cart</button>
+				</form> 
+				
 				<h4 class="mt-5 mb-5">Product Details</h4>
-				<span>The details of this products will be displayed shortly</span>
+				<span><?= $row['product_description']; ?></span>
 
 			</div>
+
+
+
+			<?php } ?>
 		</div>
 	</section>
-
-
-
 
 
 	<!--FOOTER-->

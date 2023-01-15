@@ -1,3 +1,60 @@
+
+<?php
+  session_start();
+  //check if post param is empty or not
+  //if user clicked the add_to_cart btn
+  if(isset($_POST['add_to_cart'])) {
+
+    //If the user added something before, add ito that
+    if(isset($_SESSION['cart'])){
+
+      $products_array_ids = array_column($_SESSION['cart'],"product_id");
+      //If product has alredy been added to cart or not
+      if(!in_array($_POST['product_id'], $products_array_ids)){
+  
+        //Add all the quantity in one single array
+        $product_array = array(
+          'product_id'    => $_POST['product_id'],
+          'product_name'  =>  $_POST['product_name'],
+          'product_price'    => $_POST['product_price'],
+          'product_image'     => $_POST['product_image'],
+          'product_quantity' =>  $_POST['product_quantity']
+        );
+  
+      }else{
+        //product has already been added
+        echo '<script>alert("Product was already Addded to the Cart")</script>';
+        echo '<script>window.location="index.php";</script>';
+      }
+
+    }else{
+      //If this is the first product
+      $product_id = $_POST['product_id'];
+      $product_name= $_POST['product_name'];
+      $product_price= $_POST['product_price'];
+      $product_image = $_POST['product_image'];
+      $product_quantity = $_POST['poduct_quantity'];
+
+      //Add all the quantity in one single array
+      $product_array = array(
+        'product_id'    => $product_id,
+        'product_name'  =>  $product_name,
+        'product_price'    => $product_price,
+        'product_image'     => $product_image,
+        'product_quantity' =>  $product_quantity 
+      );
+
+      //Add array to session
+      $_SESSION['cart']['$product_id'] =  $product_array;
+     
+      
+    }
+
+  }else{
+    header('location:index.php');
+  }
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -99,55 +156,6 @@
                     </td>
                 </tr>
 
-                <tr>
-                    <td>
-                        <div class="product-info">
-                            <img src="assests/imgs/featured1.jpg" alt="">
-                            <div>
-                                <p>White Shoes</p>
-                                <small><span>R</span>155</small>
-                                <br>
-                                <a href="" class="remove-btn" href="#">Remove</a>
-                            </div>
-                        </div>
-                    </td>
-
-                    <td>
-                        <input type="number" value="1">
-                        <a class="edit-btn" href="#">Edit</a>
-                    </td>
-
-
-                    <td>
-                        <span>R</span>
-                        <span class="product-price">155</span>
-                    </td>
-                </tr>
-
-                <tr>
-                    <td>
-                        <div class="product-info">
-                            <img src="assests/imgs/featured1.jpg" alt="">
-                            <div>
-                                <p>White Shoes</p>
-                                <small><span>R</span>155</small>
-                                <br>
-                                <a href="" class="remove-btn" href="#">Remove</a>
-                            </div>
-                        </div>
-                    </td>
-
-                    <td>
-                        <input type="number" value="1">
-                        <a class="edit-btn" href="#">Edit</a>
-                    </td>
-
-
-                    <td>
-                        <span>R</span>
-                        <span class="product-price">155</span>
-                    </td>
-                </tr>
             </table>
 
             <div class="cart-total">
@@ -168,29 +176,6 @@
                 <button class="btn checkout-btn">Checkout</button>
             </div>
       </section>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
