@@ -12,7 +12,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
 
 
-  <link rel="stylesheet" href="assests/css/styles1.css">
+  <link rel="stylesheet" href="assests/css/styles.css">
 
 
 </head>
@@ -30,7 +30,7 @@
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
 
           <li class="nav-item">
-            <a class="nav-link" href="index.html">Home</a>
+            <a class="nav-link" href="index.php">Home</a>
           </li>
 
           <li class="nav-item">
